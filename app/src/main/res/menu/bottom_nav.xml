@@ -14,11 +14,6 @@
         app:showAsAction="ifRoom|withText" />
 
     <item
-        android:id="@+id/chat"
-        android:icon="@drawable/ic_chat_white_18dp"
-        android:title="@string/chat"
-        app:showAsAction="ifRoom|withText" />
-    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_account_box_white_18dp"
         android:title="@string/profile"

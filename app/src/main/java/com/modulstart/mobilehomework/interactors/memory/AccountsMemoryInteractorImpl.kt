@@ -9,15 +9,15 @@ import java.math.BigDecimal
 class AccountsMemoryInteractorImpl :
     AccountsMemoryInteractor {
 
-    private lateinit var accounts: MutableList<Account>
-    private lateinit var transactions: MutableList<Transaction>
+    private var accounts: MutableList<Account>? = null
+    private var transactions: MutableList<Transaction>? = null
 
     override fun getAccounts(): Observable<MutableList<Account>> {
-        return Observable.create{
-            if(this::accounts.isInitialized){
-                it.onNext(accounts)
+        return Observable.create{ acc ->
+            accounts?.let {
+                acc.onNext(accounts)
             }
-            it.onComplete()
+            acc.onComplete()
         }
     }
 
@@ -27,7 +27,7 @@ class AccountsMemoryInteractorImpl :
 
     override fun getAccountById(id: Long): Observable<Account> {
         return Observable.create{
-            val accForSearch = accounts.find { acc -> acc.id == id }
+            val accForSearch = accounts?.find { acc -> acc.id == id }
             if(accForSearch != null){
                 it.onNext(accForSearch)
             }
@@ -36,23 +36,23 @@ class AccountsMemoryInteractorImpl :
     }
 
     override fun saveDeposit(toId: Long, amount: BigDecimal) {
-        if(this::accounts.isInitialized){
-            val index = accounts.indexOf(accounts.find { it.id == toId })
+        accounts?.let {
+            val index = it.indexOf(it.find { it.id == toId })
             //accounts[index].amount += amount
         }
     }
 
     override fun saveTransaction(transaction: Transaction) {
-        if(this::accounts.isInitialized){
-            val indexTo = accounts.indexOf(accounts.find { it.id == transaction.toId })
-            accounts[indexTo].amount += transaction.amount
+        if(accounts != null){
+            val indexTo = accounts?.indexOf(accounts?.find { it.id == transaction.toId })
+            accounts!![indexTo!!].amount += transaction.amount
             if(transaction.fromId != 0L){
-                val indexFrom = accounts.indexOf(accounts.find { it.id == transaction.fromId })
-                accounts[indexFrom].amount -= transaction.amount
+                val indexFrom = accounts?.indexOf(accounts?.find { it.id == transaction.fromId })
+                accounts!![indexFrom!!].amount -= transaction.amount
             }
         }
-        if(this::transactions.isInitialized){
-            transactions.add(0, transaction)
+        if(transactions != null){
+            transactions?.add(0, transaction)
         }
     }
 
@@ -62,7 +62,7 @@ class AccountsMemoryInteractorImpl :
 
     override fun getAllTransactions(): Observable<MutableList<Transaction>> {
         return Observable.create{
-            if(this::transactions.isInitialized){
+            if(transactions != null){
                 it.onNext(transactions)
             }
             it.onComplete()
@@ -70,16 +70,21 @@ class AccountsMemoryInteractorImpl :
     }
 
     override fun saveCreatedAccount(account: Account) {
-        if(this::accounts.isInitialized){
-            accounts.add(0, account)
+        if(accounts != null){
+            accounts?.add(0, account)
         }
     }
 
     override fun closeAccount(id: Long) {
-        if(this::accounts.isInitialized){
-            val index = accounts.indexOf(accounts.find { it.id == id })
-            accounts.removeAt(index)
+        if(accounts != null){
+            val index = accounts?.indexOf(accounts?.find { it.id == id })
+            accounts?.removeAt(index!!)
         }
+    }
+
+    override fun clear() {
+        accounts = null
+        transactions = null
     }
 
 }

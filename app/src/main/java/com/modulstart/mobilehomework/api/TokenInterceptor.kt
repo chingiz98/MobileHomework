@@ -10,9 +10,7 @@ import javax.inject.Singleton
 class TokenInterceptor @Inject constructor() : Interceptor {
     var token:String=""
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.d("MSG", "MAKING API REQUEST")
         val original = chain.request()
-
         if (original.url().encodedPath().contains("/auth/login")
             || (original.url().encodedPath().contains("/auth/signup"))
         ) {

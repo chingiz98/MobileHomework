@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import com.modulstart.mobilehomework.App
 import com.modulstart.mobilehomework.R
 import com.modulstart.mobilehomework.api.dto.ApiError
+import com.modulstart.mobilehomework.interactors.memory.AccountsMemoryInteractor
+import com.modulstart.mobilehomework.interactors.memory.ProfileMemoryInteractor
 import com.modulstart.mobilehomework.views.login.LogInScreen
 import kotlinx.android.synthetic.main.activity_home.*
 import moxy.MvpAppCompatFragment
@@ -20,6 +22,12 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
 
     @Inject
     lateinit var sharedPrefs: SharedPreferences
+
+    @Inject
+    lateinit var profileMemoryInteractor: ProfileMemoryInteractor
+
+    @Inject
+    lateinit var accountsMemoryInteractor: AccountsMemoryInteractor
 
     override fun onAttach(context: Context) {
         App.appComponent.inject(this)
@@ -46,6 +54,8 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
             putBoolean(getString(com.modulstart.mobilehomework.R.string.login_state), false)
             commit()
         }
+        profileMemoryInteractor.clear()
+        accountsMemoryInteractor.clear()
         startActivity(Intent(activity, LogInScreen::class.java).apply {
             this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         })

@@ -115,12 +115,10 @@ class AccountsFragment : BaseFragment(),
     }
 
     override fun showAccountsLoading() {
-        Log.d("MSG", "Accounts loading")
         progressLayer.visibility = View.VISIBLE
     }
 
     override fun showAccounts(accounts: MutableList<Account>) {
-        Log.d("MSG", "Accounts loaded")
         progressLayer.visibility = View.GONE
         if(accounts.isEmpty())
             no_accounts_hint.visibility = View.VISIBLE
@@ -130,7 +128,7 @@ class AccountsFragment : BaseFragment(),
     }
 
     override fun createAccountSuccess(account: Account) {
-        //accounts.add(0, account)
+        no_accounts_hint.visibility = View.GONE
         recyclerAdapter.notifyItemInserted(0)
         accountsList.scrollToPosition(0)
     }
@@ -147,7 +145,6 @@ class AccountsFragment : BaseFragment(),
     }
 
     override fun onAccountSelected(account: Account) {
-        Log.d("MSG", "Account selected")
         val bundle = Bundle()
         bundle.putLong("accountId", account.id)
         findNavController().navigate(R.id.action_accounts_fragment_to_accountActionsFragment, bundle)

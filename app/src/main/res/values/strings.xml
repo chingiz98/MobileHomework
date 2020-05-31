@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name">MobileHomework</string>
     <string name="app_splash_logo">ModulStart</string>
-    <string name="login">login</string>
-    <string name="password">password</string>
+    <string name="login">E-mail</string>
+    <string name="name_hint">Name</string>
+    <string name="password">Password</string>
+    <string name="password_confirm">Password confirmation</string>
     <string name="signin">Sign in</string>
     <string name="signup">Sign up</string>
     <string name="accounts">Accounts</string>
-    <string name="op_history">Operations history</string>
+    <string name="op_history">History</string>
     <string name="chat">Support chat</string>
     <string name="details">Account details</string>
-    <string name="profile">My profile</string>
+    <string name="profile">Profile</string>
     <string name="login_state">logged_in</string>
     <string name="access_token">access_token</string>
     <string name="no_accounts">No accounts</string>
@@ -46,6 +48,7 @@
     <string name="new_account">New account</string>
     <string name="acc_name">Account name</string>
     <string name="logout_warning">Are you sure want to logout?</string>
+    <string name="password_warning">Password and password confirmation are not the same</string>
     <string name="close_acc_warning">Are you sure want to close this account?</string>
     <string name="warning">Warning</string>
     <string name="yes">Yes</string>

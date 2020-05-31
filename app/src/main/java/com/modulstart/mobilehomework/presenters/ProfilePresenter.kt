@@ -41,7 +41,6 @@ class ProfilePresenter(private val repository: ProfileRepository) : MvpPresenter
 
     fun uploadPhoto(image: File){
         val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), image)
-
         val body = MultipartBody.Part.createFormData("file", image.name, requestFile)
         repository.uploadPhoto(body)
             .subscribeOn(Schedulers.newThread())

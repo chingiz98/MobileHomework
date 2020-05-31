@@ -15,7 +15,6 @@ class HomeScreen : BaseScreen() {
         setContentView(R.layout.activity_home)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-
         navView.menu.clear()
         navView.inflateMenu(R.menu.bottom_nav)
         navController.graph.startDestination = R.id.accounts_fragment
@@ -23,7 +22,6 @@ class HomeScreen : BaseScreen() {
             setOf(
                 R.id.accounts_fragment,
                 R.id.transactionsFragment,
-                R.id.chat,
                 R.id.profileFragment
             )
         )

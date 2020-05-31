@@ -10,6 +10,7 @@ import com.modulstart.mobilehomework.presenters.LogInPresenter
 import com.modulstart.mobilehomework.repository.auth.AuthProvider
 import com.modulstart.mobilehomework.views.HomeScreen
 import com.modulstart.mobilehomework.views.base.BaseScreen
+import com.modulstart.mobilehomework.views.signup.SignupScreen
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -41,10 +42,11 @@ class LogInScreen : BaseScreen(),
         logInPresenter.checkLogin()
         setContentView(R.layout.activity_main)
         loginButton.setOnClickListener {
-            //logInPresenter.logIn("test@test.com", "12345")
             logInPresenter.logIn(login.text.toString(), password.text.toString())
         }
-
+        signupBtn.setOnClickListener {
+            startActivity(Intent(this@LogInScreen, SignupScreen::class.java))
+        }
 
     }
 
@@ -65,13 +67,11 @@ class LogInScreen : BaseScreen(),
     }
 
     override fun login() {
-        startActivity(Intent(this@LogInScreen, HomeScreen::class.java).apply {
-            //this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        })
+        startActivity(Intent(this@LogInScreen, HomeScreen::class.java))
     }
 
     private fun interceptorInit() {
-        val sharedPref = sharedPrefs//getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = sharedPrefs
         val loggedIn = sharedPref.getBoolean(getString(R.string.login_state), false)
         if(loggedIn){
             val accessToken = sharedPref.getString(getString(R.string.access_token), "")

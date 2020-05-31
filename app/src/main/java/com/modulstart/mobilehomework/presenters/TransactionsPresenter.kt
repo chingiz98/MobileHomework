@@ -25,12 +25,12 @@ class TransactionsPresenter(private val repository: AccountsRepository) : MvpPre
     }
 
     private fun combine(firstResponse: MutableList<Transaction>, secondResponse: MutableList<Account>){
-        //viewState.showData(firstResponse, secondResponse)
         transactions = firstResponse
         accounts = secondResponse
     }
 
     private fun loadTransactions() {
+        viewState.showTransactionsLoading()
         Observable.zip(
             repository.getAllTransactions().subscribeOn(Schedulers.newThread()),
             repository.getAccounts().subscribeOn(Schedulers.newThread()),
@@ -42,16 +42,13 @@ class TransactionsPresenter(private val repository: AccountsRepository) : MvpPre
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackWrapper<Unit?>(viewState) {
                 override fun onSuccess(response: Unit?) {
-                    Log.d("MSG", "UNIT")
-                    showFiltered(start, end)
-                    //viewState.showData(transactions, accounts)
-                    //viewState.showTransactions(response!!)
+                    filter(start, end)
                 }
             })
     }
 
-    fun showFiltered(start: Long, end: Long){
 
+    fun filter(start: Long, end: Long){
         if(this::transactions.isInitialized && this::accounts.isInitialized){
             if(start == 0L || end == 0L){
                 viewState.showData(transactions, accounts)
@@ -59,8 +56,8 @@ class TransactionsPresenter(private val repository: AccountsRepository) : MvpPre
             }
             this.start = start
             this.end = end
-            transactions = transactions.filter { it.timestamp.time >= start &&                                                                                                                                     it.timestamp.time <= end }.toMutableList()
-            viewState.showData(transactions, accounts)
+            val filtered = transactions.filter { it.timestamp.time in start..end }.toMutableList()
+            viewState.showData(filtered, accounts)
         }
     }
 

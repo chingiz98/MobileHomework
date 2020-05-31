@@ -3,6 +3,7 @@ package com.modulstart.mobilehomework.views.transactions
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.Pair
 import android.view.*
 import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,11 +14,11 @@ import com.modulstart.mobilehomework.presenters.TransactionsPresenter
 import com.modulstart.mobilehomework.repository.accounts.AccountsRepository
 import com.modulstart.mobilehomework.repository.models.Account
 import com.modulstart.mobilehomework.repository.models.Transaction
-import com.modulstart.mobilehomework.views.accounts.accountsList.AccountsRecyclerViewAdapter
 import com.modulstart.mobilehomework.views.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_accounts.*
 import kotlinx.android.synthetic.main.fragment_transactions.*
+import kotlinx.android.synthetic.main.progress_layer.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -30,7 +31,8 @@ class TransactionsFragment : BaseFragment(), TransactionsView, TransactionRecycl
     @Inject
     lateinit var provider: AccountsRepository
 
-    lateinit var recyclerAdapter : TransactionsRecyclerViewAdapter
+    private lateinit var recyclerAdapter : TransactionsRecyclerViewAdapter
+    private lateinit var picker : MaterialDatePicker<androidx.core.util.Pair<Long, Long>>
 
     @ProvidePresenter
     fun provideAccountsPresenter(): TransactionsPresenter {
@@ -59,15 +61,7 @@ class TransactionsFragment : BaseFragment(), TransactionsView, TransactionRecycl
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 return when (item!!.itemId) {
                     R.id.calendar_view -> {
-                        Log.d("MSG", "SELECTED CALENDAR")
-                        val builder = MaterialDatePicker.Builder.dateRangePicker()
-                        val picker = builder.setTheme(R.style.ThemeOverlay_MaterialComponents_MaterialCalendar).build()
                         picker.show(activity?.supportFragmentManager!!, picker.toString())
-                        picker.addOnNegativeButtonClickListener {  }
-                        picker.addOnPositiveButtonClickListener {
-                            Log.d("MSG", "The selected date range is ${it.first} - ${it.second}")
-                            transactionsPresenter.showFiltered(it.first!!, it.second!!)
-                        }
                         true
                     }
 
@@ -77,11 +71,28 @@ class TransactionsFragment : BaseFragment(), TransactionsView, TransactionRecycl
 
         })
         initRecyclerView()
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        picker = builder.build()
+        picker.addOnNegativeButtonClickListener {  }
+        picker.addOnPositiveButtonClickListener {
+            transactionsPresenter.filter(it.first!!, it.second!!)
+        }
+    }
+
+    override fun showTransactionsLoading() {
+        progressLayer.visibility = View.VISIBLE
     }
 
     override fun showData(transactions: MutableList<Transaction>, accounts: MutableList<Account>) {
         setRecyclerAdapter(transactions, accounts)
+        progressLayer.visibility = View.GONE
+        if(transactions.isEmpty())
+            no_transactions_hint.visibility = View.VISIBLE
+        else
+            no_transactions_hint.visibility = View.GONE
     }
+
+
 
     private fun setRecyclerAdapter(transactions: MutableList<Transaction>, accounts: MutableList<Account>) {
         recyclerAdapter = TransactionsRecyclerViewAdapter(transactions, accounts, this)

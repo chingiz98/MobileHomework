@@ -5,12 +5,12 @@ import com.modulstart.mobilehomework.repository.models.User
 import io.reactivex.rxjava3.core.Observable
 
 class ProfileMemoryInteractorImpl : ProfileMemoryInteractor {
-    private lateinit var user: User
-    private lateinit var image: Bitmap
+    private var user: User? = null
+    private var image: Bitmap? = null
 
     override fun getProfile(): Observable<User> {
         return Observable.create{
-            if(this::user.isInitialized){
+            if(user != null){
                 it.onNext(user)
             }
             it.onComplete()
@@ -23,7 +23,7 @@ class ProfileMemoryInteractorImpl : ProfileMemoryInteractor {
 
     override fun getPhoto(): Observable<Bitmap> {
         return Observable.create{
-            if(this::image.isInitialized){
+            if(image != null){
                 it.onNext(image)
             }
             it.onComplete()
@@ -32,5 +32,10 @@ class ProfileMemoryInteractorImpl : ProfileMemoryInteractor {
 
     override fun savePhoto(bitmap: Bitmap) {
         this.image = bitmap
+    }
+
+    override fun clear() {
+        user = null
+        image = null
     }
 }

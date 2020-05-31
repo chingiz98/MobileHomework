@@ -8,12 +8,12 @@
     tools:context=".views.login.LogInScreen">
 
     <TextView
-        android:id="@+id/signupBtn"
+        android:id="@+id/signInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/signup"
+        android:text="@string/signin"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="16sp"
@@ -36,7 +36,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
 
     <EditText
         android:id="@+id/login"
@@ -62,13 +65,33 @@
         tools:targetApi="o" />
 
     <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="true"
+        android:background="@drawable/cornersstrokeview"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="@string/name_hint"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/hintColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        tools:targetApi="o" />
+    <EditText
         android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:autofillHints="true"
-        android:background="@drawable/bottomcornersroundedview"
+        android:background="@drawable/cornersstrokeview"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="@string/password"
@@ -80,21 +103,42 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        tools:targetApi="o" />
+    <EditText
+        android:id="@+id/passwordConfirm"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="true"
+        android:background="@drawable/bottomcornersroundedview"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="@string/password_confirm"
+        android:inputType="textPassword"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/hintColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
         tools:targetApi="o" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginButton"
+        android:id="@+id/signupButton"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/cornersroundedview"
-        android:text="@string/signin"
+        android:text="@string/signup"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordConfirm" />
 </androidx.constraintlayout.widget.ConstraintLayout>

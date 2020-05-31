@@ -14,6 +14,11 @@ interface Api {
     @Headers("Content-Type: application/json")
     fun logIn(@Body loginCredentialsDTO: LoginCredentialsDTO): Observable<AccessTokenDTO>
 
+    @POST("/auth/signup")
+    @Headers("Content-Type: application/json")
+    fun signup(@Body signupCredentialsDTO: SignUpCredentialsDTO): Observable<AccessTokenDTO>
+
+
     @GET("/accounts/getAccounts")
     @Headers("Content-Type: application/json")
     fun getAccounts(): Observable<MutableList<AccountDTO>>

@@ -1,17 +1,22 @@
 package com.modulstart.mobilehomework.views.base
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.modulstart.mobilehomework.App
 import com.modulstart.mobilehomework.R
 import com.modulstart.mobilehomework.api.TokenInterceptor
 import com.modulstart.mobilehomework.api.dto.ApiError
+import com.modulstart.mobilehomework.interactors.memory.AccountsMemoryInteractor
+import com.modulstart.mobilehomework.interactors.memory.ProfileMemoryInteractor
 import com.modulstart.mobilehomework.views.HomeScreen
 import com.modulstart.mobilehomework.views.base.BaseView
 import com.modulstart.mobilehomework.views.login.LogInScreen
@@ -22,6 +27,13 @@ abstract class BaseScreen : MvpAppCompatActivity(), BaseView {
 
     @Inject
     lateinit var sharedPrefs: SharedPreferences
+
+    @Inject
+    lateinit var profileMemoryInteractor: ProfileMemoryInteractor
+
+    @Inject
+    lateinit var accountsMemoryInteractor: AccountsMemoryInteractor
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.appComponent.inject(this)
@@ -46,7 +58,8 @@ abstract class BaseScreen : MvpAppCompatActivity(), BaseView {
             putBoolean(getString(R.string.login_state), false)
             commit()
         }
-
+        profileMemoryInteractor.clear()
+        accountsMemoryInteractor.clear()
         startActivity(Intent(this@BaseScreen, LogInScreen::class.java).apply {
             this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         })

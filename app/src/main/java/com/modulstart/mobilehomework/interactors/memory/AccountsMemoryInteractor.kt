@@ -5,7 +5,7 @@ import com.modulstart.mobilehomework.repository.models.Transaction
 import io.reactivex.rxjava3.core.Observable
 import java.math.BigDecimal
 
-interface AccountsMemoryInteractor {
+interface AccountsMemoryInteractor : BaseMemoryInteractor {
     fun getAccounts() : Observable<MutableList<Account>>
     fun saveAccounts(accounts: MutableList<Account>)
     fun getAccountById(id: Long) : Observable<Account>

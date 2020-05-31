@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.dialog_deposit.view.*
 import kotlinx.android.synthetic.main.fragment_account_actions.*
 import kotlinx.android.synthetic.main.progress_layer.*
 import kotlinx.android.synthetic.main.dialog_transfer.view.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.math.BigDecimal
@@ -56,18 +55,13 @@ class AccountActionsFragment: BaseFragment(), AccountActionsView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val root = inflater.inflate(R.layout.fragment_account_actions, container, false)
-        //actionsPresenter.loadAccount()
-
-        return root
+        return inflater.inflate(R.layout.fragment_account_actions, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initButtons()
     }
-
 
     override fun showLoading() {
         progressLayer.visibility = View.VISIBLE

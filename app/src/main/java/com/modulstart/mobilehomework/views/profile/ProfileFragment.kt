@@ -17,6 +17,7 @@ import com.modulstart.mobilehomework.repository.models.User
 import com.modulstart.mobilehomework.repository.profile.ProfileRepository
 import com.modulstart.mobilehomework.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.progress_layer.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.io.File
@@ -75,13 +76,16 @@ class ProfileFragment: BaseFragment(), ProfileView {
     }
 
     override fun showLoading() {
-
+        progressLayer.visibility = View.VISIBLE
+        profileContent.visibility = View.INVISIBLE
     }
 
     override fun showProfile(user: User) {
         profileName.text = user.name
         profileUsername.text = user.username
         profileStatus.text = user.status
+        progressLayer.visibility = View.GONE
+        profileContent.visibility = View.VISIBLE
     }
 
     override fun showProfileImage(bitmap: Bitmap) {

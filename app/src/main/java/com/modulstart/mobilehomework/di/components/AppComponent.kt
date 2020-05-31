@@ -6,6 +6,7 @@ import com.modulstart.mobilehomework.views.accounts.actions.AccountActionsFragme
 import com.modulstart.mobilehomework.views.base.BaseFragment
 import com.modulstart.mobilehomework.views.login.LogInScreen
 import com.modulstart.mobilehomework.views.base.BaseScreen
+import com.modulstart.mobilehomework.views.signup.SignupScreen
 import com.modulstart.mobilehomework.views.profile.ProfileFragment
 import com.modulstart.mobilehomework.views.transactions.TransactionsFragment
 import dagger.Component
@@ -17,6 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject (activity: BaseScreen)
     fun inject (activity: LogInScreen)
+    fun inject (activity: SignupScreen)
     fun inject (fragment: AccountsFragment)
     fun inject (fragment: AccountActionsFragment)
     fun inject (fragment: TransactionsFragment)
