@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3E64B8</color>
+    <color name="colorPrimaryDark">#3E64B8</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="darkBlue">#264682</color>
+    <color name="lightBlue">#23B3FC</color>
+    <color name="colorYellow">#FFD95D</color>
+    <color name="hintColor">#CCCFD5</color>
+    <color name="dateColor">#5F6771</color>
+    <color name="backgroundComment">#F6F7F9</color>
+    <color name="colorGreen">#90D15A</color>
+    <color name="colorRed">#FF3A64</color>
+    <color name="colorOrange">#FF8E0C</color>
+    <color name="colorAccentText">#070707</color>
+    <color name="goldStatus">#FFD700</color>
+    <color name="white">#FFFFFF</color>
+    <color name="mediumBlue">#3087E7</color>
+    <color name="logoutColor">#FF0033</color>
+
+</resources>

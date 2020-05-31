@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/accounts_fragment">
+
+    <fragment
+        android:id="@+id/accounts_fragment"
+        android:name="com.modulstart.mobilehomework.views.accounts.accountsList.AccountsFragment"
+        android:label="@string/accounts" >
+
+        <action
+            android:id="@+id/action_accounts_fragment_to_accountActionsFragment"
+            app:destination="@id/accountActionsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@android:anim/slide_out_right"
+           />
+    </fragment>
+    <fragment
+        android:id="@+id/accountActionsFragment"
+        android:name="com.modulstart.mobilehomework.views.accounts.actions.AccountActionsFragment"
+        android:label="@string/details"
+        >
+        <argument
+            android:name="accountId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.modulstart.mobilehomework.views.transactions.TransactionsFragment"
+        android:label="@string/op_history" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.modulstart.mobilehomework.views.profile.ProfileFragment"
+        android:label="@string/profile" />
+</navigation>
