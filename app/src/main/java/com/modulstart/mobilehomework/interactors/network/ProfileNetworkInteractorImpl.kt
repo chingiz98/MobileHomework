@@ -21,4 +21,8 @@ class ProfileNetworkInteractorImpl(val api: Api) : ProfileNetworkInteractor {
     override fun getPhoto(): Observable<Bitmap> {
         return api.getImage().map { BitmapFactory.decodeStream(it.byteStream()) }
     }
+
+    override fun updateInfo(username: String, name: String): Observable<EmptyResult> {
+        return api.updateInfo(username, name)
+    }
 }

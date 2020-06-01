@@ -59,10 +59,20 @@ class ProfilePresenter(private val repository: ProfileRepository) : MvpPresenter
                 override fun onSuccess(response: Bitmap?) {
                     viewState.showProfileImage(response!!)
                 }
-
                 override fun onError(e: Throwable?) {
                     if(!(e is HttpException && (e as HttpException).code() == 500))
                         super.onError(e)
+                }
+            })
+    }
+
+    fun updateInfo(username: String, name: String){
+        repository.updateInfo(username, name)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackWrapper<EmptyResult?>(viewState) {
+                override fun onSuccess(response: EmptyResult?) {
+                    getProfile()
                 }
             })
     }

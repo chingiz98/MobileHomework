@@ -34,6 +34,14 @@ class ProfileMemoryInteractorImpl : ProfileMemoryInteractor {
         this.image = bitmap
     }
 
+    override fun saveNewData(username: String, name: String) {
+        if(user != null){
+            user!!.username = username
+            user!!.name = name
+        }
+
+    }
+
     override fun clear() {
         user = null
         image = null

@@ -33,4 +33,10 @@ class ProfileRepositoryImpl(val networkInteractor: ProfileNetworkInteractor, val
             .firstElement()
             .toObservable()
     }
+
+    override fun updateInfo(username: String, name: String): Observable<EmptyResult> {
+        return networkInteractor.updateInfo(username, name).doOnNext {
+            memoryInteractor.saveNewData(username, name)
+        }
+    }
 }

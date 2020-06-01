@@ -20,4 +20,5 @@ interface ProfileView : BaseView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showProfileImage(bitmap: Bitmap)
 
+
 }

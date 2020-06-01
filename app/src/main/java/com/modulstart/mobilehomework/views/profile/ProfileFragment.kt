@@ -2,20 +2,28 @@ package com.modulstart.mobilehomework.views.profile
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.modulstart.mobilehomework.App
 import com.modulstart.mobilehomework.R
 import com.modulstart.mobilehomework.presenters.ProfilePresenter
+import com.modulstart.mobilehomework.repository.models.Account
 import com.modulstart.mobilehomework.repository.models.User
 import com.modulstart.mobilehomework.repository.profile.ProfileRepository
 import com.modulstart.mobilehomework.views.base.BaseFragment
+import kotlinx.android.synthetic.main.dialog_edit_user_info.view.*
+import kotlinx.android.synthetic.main.dialog_transfer.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.progress_layer.*
 import moxy.presenter.InjectPresenter
@@ -35,6 +43,7 @@ class ProfileFragment: BaseFragment(), ProfileView {
     @Inject
     lateinit var repository: ProfileRepository
 
+    lateinit var user: User
 
     @ProvidePresenter
     fun provideProfilePresenter(): ProfilePresenter {
@@ -73,6 +82,10 @@ class ProfileFragment: BaseFragment(), ProfileView {
                 }
                 .show()
         }
+
+        editButton.setOnClickListener {
+            showEditInfoDialog()
+        }
     }
 
     override fun showLoading() {
@@ -81,6 +94,7 @@ class ProfileFragment: BaseFragment(), ProfileView {
     }
 
     override fun showProfile(user: User) {
+        this.user = user
         profileName.text = user.name
         profileUsername.text = user.username
         profileStatus.text = user.status
@@ -124,9 +138,62 @@ class ProfileFragment: BaseFragment(), ProfileView {
                     }
                     profilePresenter.uploadPhoto(file)
                 }
-
             }
         }
+    }
+
+    private fun showEditInfoDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.edit_profile_info))
+        val viewInflated: View = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, view as ViewGroup?, false)
+        viewInflated.nameEdit.text = Editable.Factory.getInstance().newEditable(user.name)
+        viewInflated.usernameEdit.text = Editable.Factory.getInstance().newEditable(user.username)
+        builder.setView(viewInflated)
+        builder.setPositiveButton(
+            R.string.save,
+            DialogInterface.OnClickListener { _, _ ->
+
+            }
+        )
+        builder.setNegativeButton(
+            android.R.string.cancel,
+            DialogInterface.OnClickListener{ _, _ -> }
+        )
+
+        val dialog: AlertDialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+                var error = false
+                viewInflated.nameLayoutEdit.error = null
+                viewInflated.usernameLayoutEdit.error = null
+                val nameText = viewInflated.nameEdit.text.toString()
+                val usernameText = viewInflated.usernameEdit.text.toString()
+                if(nameText.isEmpty()){
+                    viewInflated.nameLayoutEdit.error = getString(R.string.name_empty_error)
+                    error = true
+                }
+                if(nameText.length <= 3){
+                    viewInflated.nameLayoutEdit.error = getString(R.string.name_short_error)
+                    error = true
+                }
+                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usernameText).matches()){
+                    viewInflated.usernameLayoutEdit.error = getString(R.string.username_invalid_error)
+                    error = true
+                }
+                if(usernameText.isEmpty()){
+                    viewInflated.usernameLayoutEdit.error = getString(R.string.username_empty_error)
+                    error = true
+                }
+
+                if(!error){
+                    profilePresenter.updateInfo(usernameText, nameText)
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        dialog.show()
+        dialog.setCancelable(false)
     }
 
 }

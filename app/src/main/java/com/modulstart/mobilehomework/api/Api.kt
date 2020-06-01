@@ -62,5 +62,9 @@ interface Api {
     @GET("/user/getImage")
     fun getImage(): Observable<ResponseBody>
 
+    @POST("/user/updateInfo")
+    @Headers("Content-Type: application/json")
+    fun updateInfo(@Query("username") username: String, @Query("name") name: String): Observable<EmptyResult>
+
 
 }

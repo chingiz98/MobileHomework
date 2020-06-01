@@ -12,4 +12,5 @@ interface ProfileRepository {
     fun getProfile(): Observable<User>
     fun uploadPhoto(photo: MultipartBody.Part) : Observable<EmptyResult>
     fun getPhoto() : Observable<Bitmap>
+    fun updateInfo(username: String, name: String) : Observable<EmptyResult>
 }

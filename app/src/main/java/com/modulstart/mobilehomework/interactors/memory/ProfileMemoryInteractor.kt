@@ -9,4 +9,5 @@ interface ProfileMemoryInteractor : BaseMemoryInteractor {
     fun saveProfile(user: User)
     fun getPhoto() : Observable<Bitmap>
     fun savePhoto(bitmap: Bitmap)
+    fun saveNewData(username: String, name: String)
 }
