@@ -11,12 +11,12 @@
 - Изменение данных пользователя 
 
 ### Скриншоты:
-![](images/1.png)
-![](images/2.png)
-![](images/3.png)
-![](images/4.png)
-![](images/5.png)
-![](images/6.png)
-![](images/7.png)
-![](images/8.png)
-![](images/9.png)
+<img src="images/1.png" width="40%">.
+<img src="images/2.png" width="40%">.
+<img src="images/3.png" width="40%">.
+<img src="images/4.png" width="40%">.
+<img src="images/5.png" width="40%">.
+<img src="images/6.png" width="40%">.
+<img src="images/7.png" width="40%">.
+<img src="images/8.png" width="40%">.
+<img src="images/9.png" width="40%">.
