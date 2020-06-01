@@ -37,6 +37,7 @@ def daggerVersion = "2.27"
 def moxyVersion = "2.1.2"
 def retrofitVersion = "2.9.0"
 def nav_version = "2.3.0-beta01"
+def room_version = "2.2.5"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -73,4 +74,10 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    implementation "androidx.room:room-rxjava2:$room_version"
 }

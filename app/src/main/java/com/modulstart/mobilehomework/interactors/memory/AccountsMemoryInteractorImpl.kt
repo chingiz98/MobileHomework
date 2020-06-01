@@ -45,10 +45,12 @@ class AccountsMemoryInteractorImpl :
     override fun saveTransaction(transaction: Transaction) {
         if(accounts != null){
             val indexTo = accounts?.indexOf(accounts?.find { it.id == transaction.toId })
-            accounts!![indexTo!!].amount += transaction.amount
+            if(indexTo != -1)
+                accounts!![indexTo!!].amount += transaction.amount
             if(transaction.fromId != 0L){
                 val indexFrom = accounts?.indexOf(accounts?.find { it.id == transaction.fromId })
-                accounts!![indexFrom!!].amount -= transaction.amount
+                if(indexFrom != -1)
+                    accounts!![indexFrom!!].amount -= transaction.amount
             }
         }
         if(transactions != null){
