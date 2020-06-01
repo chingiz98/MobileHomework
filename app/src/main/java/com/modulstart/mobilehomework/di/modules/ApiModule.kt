@@ -7,6 +7,8 @@ import com.modulstart.mobilehomework.App
 import com.modulstart.mobilehomework.api.Api
 import com.modulstart.mobilehomework.api.DateDeserializer
 import com.modulstart.mobilehomework.api.TokenInterceptor
+import com.modulstart.mobilehomework.interactors.database.AccountsDatabaseInteractor
+import com.modulstart.mobilehomework.interactors.database.AccountsDatabaseInteractorImpl
 import com.modulstart.mobilehomework.interactors.memory.AccountsMemoryInteractor
 import com.modulstart.mobilehomework.interactors.memory.AccountsMemoryInteractorImpl
 import com.modulstart.mobilehomework.interactors.memory.ProfileMemoryInteractor
@@ -19,6 +21,7 @@ import com.modulstart.mobilehomework.repository.accounts.AccountsRepository
 import com.modulstart.mobilehomework.repository.accounts.AccountsRepositoryImpl
 import com.modulstart.mobilehomework.repository.auth.AuthProvider
 import com.modulstart.mobilehomework.repository.auth.RetrofitAuthProvider
+import com.modulstart.mobilehomework.repository.database.AppDatabase
 import com.modulstart.mobilehomework.repository.profile.ProfileRepository
 import com.modulstart.mobilehomework.repository.profile.ProfileRepositoryImpl
 import dagger.Module
@@ -85,18 +88,30 @@ class ApiModule (var app: App) {
     }
 
     @Provides
+    fun provideAppDatabase(context: Context) : AppDatabase? {
+        return AppDatabase.getAppDataBase(context)
+    }
+
+    @Provides
     @Singleton
     fun provideAccountsMemoryInteractor() : AccountsMemoryInteractor {
         return AccountsMemoryInteractorImpl()
     }
 
+    @Provides
+    @Singleton
+    fun provideAccountsDatabaseInteractor(db: AppDatabase?) : AccountsDatabaseInteractor {
+        return AccountsDatabaseInteractorImpl(db!!)
+    }
+
 
     @Provides
     @Singleton
-    fun provideAccountsRepository(networkInteractor: AccountsNetworkInteractor, memoryInteractor: AccountsMemoryInteractor) : AccountsRepository {
+    fun provideAccountsRepository(networkInteractor: AccountsNetworkInteractor, memoryInteractor: AccountsMemoryInteractor, databaseInteractor: AccountsDatabaseInteractor) : AccountsRepository {
         return AccountsRepositoryImpl(
             networkInteractor,
-            memoryInteractor
+            memoryInteractor,
+            databaseInteractor
         )
     }
 

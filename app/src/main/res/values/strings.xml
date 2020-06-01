@@ -15,6 +15,7 @@
     <string name="login_state">logged_in</string>
     <string name="access_token">access_token</string>
     <string name="no_accounts">No accounts</string>
+    <string name="no_templates">No templates</string>
     <string name="no_transactions">No transactions</string>
     <string name="account_number">Account number</string>
     <string name="email">E-mail</string>
@@ -34,7 +35,7 @@
     <string name="enter_account_id_manually">Enter account number manually</string>
     <string name="destination_account_number">Destination account number</string>
     <string name="deposit_suc">Deposit was successful</string>
-    <string name="transaction_suc">Transaction was successful</string>
+    <string name="transaction_suc">Transaction was successful. Do you want to save the template?</string>
     <string name="username_empty_error">E-mail can\'t be empty</string>
     <string name="username_invalid_error">Invalid e-mail</string>
     <string name="name_empty_error">Name can\'t be empty</string>
@@ -61,4 +62,7 @@
     <string name="calendar">Dates filter</string>
     <string name="edit_profile_info">Edit profile info</string>
     <string name="save">Save</string>
+    <string name="templates">Templates</string>
+    <string name="template_no_name">No name</string>
+
 </resources>

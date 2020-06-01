@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include layout="@layout/progress_layer" />
+    <TextView
+        android:id="@+id/no_templates_hint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/no_templates"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:visibility="invisible" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="150dp"
+    >
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/templatesList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+</LinearLayout>
+</FrameLayout>

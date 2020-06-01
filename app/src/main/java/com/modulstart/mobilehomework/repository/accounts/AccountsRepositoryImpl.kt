@@ -1,8 +1,10 @@
 package com.modulstart.mobilehomework.repository.accounts
 
 import com.modulstart.mobilehomework.api.dto.EmptyResult
+import com.modulstart.mobilehomework.interactors.database.AccountsDatabaseInteractor
 import com.modulstart.mobilehomework.interactors.memory.AccountsMemoryInteractor
 import com.modulstart.mobilehomework.interactors.network.AccountsNetworkInteractor
+import com.modulstart.mobilehomework.repository.database.TemplateDB
 import com.modulstart.mobilehomework.repository.models.Account
 import com.modulstart.mobilehomework.repository.models.Transaction
 import io.reactivex.rxjava3.core.Observable
@@ -10,7 +12,7 @@ import java.math.BigDecimal
 import java.time.Instant
 import java.util.*
 
-class AccountsRepositoryImpl(val networkInteractor: AccountsNetworkInteractor, val memoryInteractor: AccountsMemoryInteractor) :
+class AccountsRepositoryImpl(private val networkInteractor: AccountsNetworkInteractor, private val memoryInteractor: AccountsMemoryInteractor, private val databaseInteractor: AccountsDatabaseInteractor) :
     AccountsRepository {
 
     override fun getAccounts(): Observable<MutableList<Account>> {
@@ -73,4 +75,18 @@ class AccountsRepositoryImpl(val networkInteractor: AccountsNetworkInteractor, v
             memoryInteractor.closeAccount(id)
         }
     }
+
+    override fun getTemplates(fromId: Long): Observable<List<TemplateDB>> {
+        return databaseInteractor.getTemplates(fromId)
+    }
+
+    override fun saveTemplate(tmp: TemplateDB) {
+        return databaseInteractor.saveTemplate(tmp)
+    }
+
+    override fun deleteTemplate(tmp: TemplateDB) {
+        return databaseInteractor.deleteTemplate(tmp)
+    }
+
+
 }

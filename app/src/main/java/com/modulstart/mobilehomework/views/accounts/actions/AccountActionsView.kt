@@ -1,5 +1,6 @@
 package com.modulstart.mobilehomework.views.accounts.actions
 
+import com.modulstart.mobilehomework.repository.database.TemplateDB
 import com.modulstart.mobilehomework.repository.models.AccessToken
 import com.modulstart.mobilehomework.repository.models.Account
 import com.modulstart.mobilehomework.views.base.BaseView
@@ -22,11 +23,12 @@ interface AccountActionsView : BaseView {
     fun depositSuccess(amount: BigDecimal)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun transactionSuccess(amount: BigDecimal)
+    fun transactionSuccess(fromId: Long, toId: Long, comment: String, amount: BigDecimal)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun accountCloseSuccess()
 
-
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTemplatesDialog(templates: List<TemplateDB>)
 
 }

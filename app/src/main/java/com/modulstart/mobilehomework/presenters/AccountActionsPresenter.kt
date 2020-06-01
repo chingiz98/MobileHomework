@@ -4,14 +4,18 @@ import android.util.Log
 import com.modulstart.mobilehomework.api.CallbackWrapper
 import com.modulstart.mobilehomework.api.dto.EmptyResult
 import com.modulstart.mobilehomework.repository.accounts.AccountsRepository
+import com.modulstart.mobilehomework.repository.database.TemplateDB
 import com.modulstart.mobilehomework.repository.models.Account
+import com.modulstart.mobilehomework.repository.models.User
+import com.modulstart.mobilehomework.repository.profile.ProfileRepository
 import com.modulstart.mobilehomework.views.accounts.actions.AccountActionsView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import java.math.BigDecimal
+import java.util.*
 
-class AccountActionsPresenter(private val repository: AccountsRepository, private val accountId: Long):
+class AccountActionsPresenter(private val repository: AccountsRepository, private val profileRepository: ProfileRepository, private val accountId: Long):
     MvpPresenter<AccountActionsView>(){
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -58,7 +62,7 @@ class AccountActionsPresenter(private val repository: AccountsRepository, privat
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackWrapper<EmptyResult?>(viewState) {
                 override fun onSuccess(response: EmptyResult?) {
-                    viewState.transactionSuccess(amount)
+                    viewState.transactionSuccess(fromId, toId, comment, amount)
                 }
             })
     }
@@ -73,6 +77,27 @@ class AccountActionsPresenter(private val repository: AccountsRepository, privat
                 }
             })
     }
+
+    fun loadTemplates(fromId: Long){
+        repository.getTemplates(fromId)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackWrapper<List<TemplateDB>?>(viewState) {
+                override fun onSuccess(response: List<TemplateDB>?) {
+                    viewState.showTemplatesDialog(response!!)
+                }
+            })
+    }
+
+    fun saveTemplate(tmp: TemplateDB){
+        repository.saveTemplate(tmp)
+    }
+
+    fun deleteTemplate(tmp: TemplateDB){
+        repository.deleteTemplate(tmp)
+    }
+
+
 
 
 
